@@ -1,0 +1,15 @@
+# Fixed mounting transforms from base_link to each native arm base frame.
+# Translation is in metres; roll/pitch/yaw are in radians.
+left_arm:
+  parent: base_link
+  child: Base_L
+  origin:
+    xyz: 0 0.026 0.070
+    rpy: -1.57 0 0
+
+right_arm:
+  parent: base_link
+  child: Base_R
+  origin:
+    xyz: 0 -0.026 0.070
+    rpy: 1.57 0 0

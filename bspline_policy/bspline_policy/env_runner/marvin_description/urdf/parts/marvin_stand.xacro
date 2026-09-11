@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!-- Marvin stand: base_link with inertial/visual/collision, column_link,
+     and tracking_base_link. Column / tracking offsets come from
+     config/stand.yaml (same calibration layer as arm_mounts.yaml). -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="marvin_stand_cfg"
+    value="${xacro.load_yaml('$(find marvin_description)/config/stand.yaml')}"/>
+
+  <xacro:macro name="marvin_stand" params="description_pkg:=marvin_description">
+    <!-- base_link: physical stand base with inertial, visual, and collision -->
+    <link
+        name="base_link">
+        <inertial>
+          <origin
+            xyz="6.8101E-06 5.7901E-11 0.068902"
+            rpy="0 0 0" />
+          <mass
+            value="1.21" />
+          <inertia
+            ixx="0.00393"
+            ixy="1.5099E-09"
+            ixz="-3.4422E-07"
+            iyy="0.0047631"
+            iyz="8.9145E-13"
+            izz="0.0034321" />
+        </inertial>
+        <visual>
+          <origin
+            xyz="0 0 0"
+            rpy="0 0 0" />
+          <geometry>
+            <mesh
+              filename="package://${description_pkg}/meshes/base/base_link.STL" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin
+            xyz="0 0 0"
+            rpy="0 0 0" />
+          <geometry>
+            <mesh
+              filename="package://${description_pkg}/meshes/base/base_link.STL" />
+          </geometry>
+        </collision>
+      </link>
+
+    <link name="tracking_base_link"/>
+    <joint name="base_to_tracking_base" type="fixed">
+      <parent link="base_link"/>
+      <child link="tracking_base_link"/>
+      <origin
+        xyz="${marvin_stand_cfg['tracking_base']['origin']['xyz']}"
+        rpy="${marvin_stand_cfg['tracking_base']['origin']['rpy']}"/>
+    </joint>
+
+    <link name="column_link">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <cylinder
+          radius="${marvin_stand_cfg['column']['radius']}"
+          length="${marvin_stand_cfg['column']['length']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <cylinder
+          radius="${marvin_stand_cfg['column']['radius']}"
+          length="${marvin_stand_cfg['column']['length']}"/>
+      </geometry>
+    </collision>
+    </link>
+    <joint name="base_to_column" type="fixed">
+      <parent link="base_link"/>
+      <child link="column_link"/>
+      <origin
+        xyz="${marvin_stand_cfg['column']['origin']['xyz']}"
+        rpy="${marvin_stand_cfg['column']['origin']['rpy']}"/>
+    </joint>
+
+  </xacro:macro>
+</robot>

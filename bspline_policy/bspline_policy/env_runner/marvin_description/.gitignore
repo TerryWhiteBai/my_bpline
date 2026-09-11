@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ROS/colcon build outputs
+build/
+install/
+log/
+
+# Local tooling
+.pytest_cache/
+.venv/

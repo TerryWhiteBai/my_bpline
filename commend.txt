@@ -1,0 +1,12 @@
+PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True WANDB_MODE=offline python train.py \
+  --config-name=bimanual_bspline_florence2 \
+  task.dataset.dataset_path=/home/byq/bspline/transport_abs.hdf5 \
+  task.dataset.cache_suffix=bimanual_data_cache \
+  logging.mode=offline
+
+HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True WANDB_MODE=offline python train.py \
+  --config-name=bimanual_bspline_qwen_vl \
+  task.dataset.dataset_path=/home/byq/bspline/transport_abs.hdf5 \
+  task.dataset.cache_suffix=bimanual_data_cache \
+  logging.mode=offline \
+  hydra.run.dir=/home/byq/bspline/bspline_policy/data/outputs/2026.09.09/16.59.43_bimanual_bspline_qwen_vl_bimanual_bspline

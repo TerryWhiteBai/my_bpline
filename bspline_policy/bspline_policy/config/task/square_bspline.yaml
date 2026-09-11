@@ -1,0 +1,53 @@
+name: square_bspline
+
+shape_meta: &shape_meta
+  obs:
+    agentview_image:
+      shape: [3, 84, 84]
+      type: rgb
+    robot0_eye_in_hand_image:
+      shape: [3, 84, 84]
+      type: rgb
+    robot0_eef_pos:
+      shape: [3]
+    robot0_eef_quat:
+      shape: [4]
+    robot0_gripper_qpos:
+      shape: [2]
+
+  # Raw square action is 7D: arm_pos(3), arm_rotvec(3), gripper(1).
+  # The loader converts it to arm_pos(3), arm_rot6d(6), gripper(1) = 10D.
+  # The B-spline dataset emits (chunk_size + 2 * degree, 1 + 10).
+  action:
+    shape: [10]
+
+dataset_path: &dataset_path ../square_data/demo.hdf5
+abs_action: &abs_action True
+
+env_runner:
+  _target_: diffusion_policy.env_runner.real_pusht_image_runner.RealPushTImageRunner
+
+dataset:
+  _target_: bspline_policy.dataset.robomimic_replay_bspline_image_dataset.RobomimicReplayBSplineImageDataset
+  shape_meta: *shape_meta
+  dataset_path: *dataset_path
+  horizon: ${horizon}
+  pad_before: 0
+  pad_after: 0
+  n_obs_steps: ${dataset_obs_steps}
+  abs_action: *abs_action
+  rotation_rep: 'rotation_6d'
+  chunk_size: 10
+  bspline_degree: 3
+  max_error: 0.002
+  stride: 1
+  relative_knots: false
+  use_cache: True
+  cache_suffix: square_bspline_action10_rot6d
+  cache_decoded_replay: False
+  cache_preprocessed_samples: False
+  cache_preprocessed_device: cpu
+  cache_preprocessed_share_memory: False
+  cache_preprocessed_rgb_dtype: float32
+  seed: 42
+  val_ratio: 0.0

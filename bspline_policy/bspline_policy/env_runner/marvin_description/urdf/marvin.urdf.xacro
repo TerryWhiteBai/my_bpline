@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!-- Canonical Marvin bimanual arm-only entry (no end-effector).
+
+     Args:
+       connected_to / xyz / rpy / mounts_file / left_base_* / right_base_*
+       ros2_control / use_fake_hardware / hardware_plugin / robot_ip
+
+     Tree ends at flange_L / flange_R.
+     Dual-Pika assembly: marvin_manipulation_rt_launch/urdf/marvin_manipulation.urdf.xacro. -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="marvin">
+
+  <xacro:arg name="connected_to" default="world"/>
+  <xacro:arg name="xyz" default="0 0 0"/>
+  <xacro:arg name="rpy" default="0 0 0"/>
+  <xacro:arg name="mounts_file" default="$(find marvin_description)/config/arm_mounts.yaml"/>
+  <xacro:property name="arm_mounts" value="${xacro.load_yaml('$(arg mounts_file)')}"/>
+  <xacro:arg name="left_base_xyz" default="${arm_mounts['left_arm']['origin']['xyz']}"/>
+  <xacro:arg name="left_base_rpy" default="${arm_mounts['left_arm']['origin']['rpy']}"/>
+  <xacro:arg name="right_base_xyz" default="${arm_mounts['right_arm']['origin']['xyz']}"/>
+  <xacro:arg name="right_base_rpy" default="${arm_mounts['right_arm']['origin']['rpy']}"/>
+  <xacro:arg name="ros2_control" default="true"/>
+  <xacro:arg name="use_fake_hardware" default="true"/>
+  <xacro:arg name="hardware_plugin" default="marvin_hardware_interface/MarvinBimanualArmHardware"/>
+  <xacro:arg name="robot_ip" default="10.19.0.191"/>
+  <xacro:arg name="stale_warn_ms" default="20.0"/>
+  <xacro:arg name="stale_error_ms" default="100.0"/>
+  <xacro:arg name="max_joint_velocity" default="6.2832"/>
+
+  <xacro:include filename="$(find marvin_description)/urdf/parts/marvin_stand.xacro"/>
+  <xacro:include filename="$(find marvin_description)/urdf/parts/marvin_bimanual_arm.xacro"/>
+  <xacro:include filename="$(find marvin_description)/urdf/parts/marvin_arm.ros2_control.xacro"/>
+
+  <xacro:marvin_stand/>
+
+  <xacro:marvin_bimanual_arm
+    connected_to="$(arg connected_to)"
+    xyz="$(arg xyz)"
+    rpy="$(arg rpy)"
+    left_base_xyz="$(arg left_base_xyz)"
+    left_base_rpy="$(arg left_base_rpy)"
+    right_base_xyz="$(arg right_base_xyz)"
+    right_base_rpy="$(arg right_base_rpy)"/>
+
+  <xacro:if value="$(arg ros2_control)">
+    <xacro:marvin_arm_ros2_control
+      use_fake_hardware="$(arg use_fake_hardware)"
+      hardware_plugin="$(arg hardware_plugin)"
+      robot_ip="$(arg robot_ip)"
+      stale_warn_ms="$(arg stale_warn_ms)"
+      stale_error_ms="$(arg stale_error_ms)"
+      max_joint_velocity="$(arg max_joint_velocity)"/>
+  </xacro:if>
+
+</robot>

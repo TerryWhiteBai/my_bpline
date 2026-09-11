@@ -1,0 +1,49 @@
+# Native M6 joint limits. Position is radians, velocity rad/s, effort N*m.
+joint1:
+  limit:
+    lower: -2.9671
+    upper: 2.9671
+    velocity: 3.1416
+    effort: 108.0
+
+joint2:
+  limit:
+    lower: -2.0944
+    upper: 2.0944
+    velocity: 3.1416
+    effort: 108.0
+
+joint3:
+  limit:
+    lower: -2.9671
+    upper: 2.9671
+    velocity: 3.1416
+    effort: 66.0
+
+joint4:
+  limit:
+    lower: -2.5307
+    upper: 1.0472
+    velocity: 3.1416
+    effort: 66.0
+
+joint5:
+  limit:
+    lower: -2.9671
+    upper: 2.9671
+    velocity: 3.1416
+    effort: 18.0
+
+joint6:
+  limit:
+    lower: -1.0472
+    upper: 1.0472
+    velocity: 3.1416
+    effort: 18.0
+
+joint7:
+  limit:
+    lower: -1.5708
+    upper: 1.5708
+    velocity: 3.1416
+    effort: 18.0

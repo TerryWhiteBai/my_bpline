@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- Marvin bimanual arm composition. Includes both left and right arm macros
+     and composes them into a single dual-arm assembly. -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find marvin_description)/urdf/parts/marvin_arm_parameters.xacro"/>
+  <xacro:include filename="$(find marvin_description)/urdf/parts/marvin_left_arm.xacro"/>
+  <xacro:include filename="$(find marvin_description)/urdf/parts/marvin_right_arm.xacro"/>
+
+  <xacro:macro name="marvin_bimanual_arm"
+    params="connected_to:='world'
+            xyz:='0 0 0'
+            rpy:='0 0 0'
+            parent:=base_link
+            left_base_xyz:='0 0.037 0.140'
+            left_base_rpy:='-1.57 0 0'
+            right_base_xyz:='0 -0.037 0.140'
+            right_base_rpy:='1.57 0 0'">
+    <xacro:unless value="${not connected_to}">
+      <link name="${connected_to}"/>
+      <joint name="base_mount_joint" type="fixed">
+        <parent link="${connected_to}"/>
+        <child link="${parent}"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+      </joint>
+    </xacro:unless>
+
+    <xacro:marvin_left_arm parent="${parent}" xyz="${left_base_xyz}" rpy="${left_base_rpy}"/>
+    <xacro:marvin_right_arm parent="${parent}" xyz="${right_base_xyz}" rpy="${right_base_rpy}"/>
+  </xacro:macro>
+
+</robot>

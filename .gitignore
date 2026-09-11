@@ -1,0 +1,9 @@
+/data
+.vscode
+setup.sh
+cloudml/
+simple_mobile/yam_teleop/data
+.omc/
+clean_bspline_policy_unet_bspline_haoyu_left_fixaction_gpucache_nowandb_noalloc_20260527_021727
+assets
+/demos

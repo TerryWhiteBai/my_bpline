@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="marvin_kinematics"
+    value="${xacro.load_yaml('$(find marvin_description)/config/kinematics.yaml')}"/>
+  <xacro:property name="marvin_joint_limits"
+    value="${xacro.load_yaml('$(find marvin_description)/config/joint_limits.yaml')}"/>
+  <xacro:property name="marvin_inertials"
+    value="${xacro.load_yaml('$(find marvin_description)/config/inertials.yaml')}"/>
+
+  <xacro:macro name="marvin_link_inertial" params="key">
+    <xacro:property name="data" value="${marvin_inertials[key]}"/>
+    <inertial>
+      <origin xyz="${data['origin']['xyz']}" rpy="${data['origin']['rpy']}"/>
+      <mass value="${data['mass']}"/>
+      <inertia
+        ixx="${data['inertia']['xx']}"
+        ixy="${data['inertia']['xy']}"
+        ixz="${data['inertia']['xz']}"
+        iyy="${data['inertia']['yy']}"
+        iyz="${data['inertia']['yz']}"
+        izz="${data['inertia']['zz']}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="marvin_joint_parameters" params="key">
+    <xacro:property name="kinematics" value="${marvin_kinematics[key]}"/>
+    <xacro:property name="limits" value="${marvin_joint_limits[key]['limit']}"/>
+    <origin xyz="${kinematics['origin']['xyz']}" rpy="${kinematics['origin']['rpy']}"/>
+    <axis xyz="${kinematics['axis']}"/>
+    <limit
+      lower="${limits['lower']}"
+      upper="${limits['upper']}"
+      velocity="${limits['velocity']}"
+      effort="${limits['effort']}"/>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,47 @@
+# Native M6 arm kinematic chain. Translation is metres; RPY is radians.
+joint1:
+  origin:
+    xyz: 0 0 0.1745
+    rpy: 0 0 0
+  axis: 0 0 1
+
+joint2:
+  origin:
+    xyz: 0 0 0
+    rpy: 1.5708 0 0
+  axis: 0 0 1
+
+joint3:
+  origin:
+    xyz: 0 0.287 0
+    rpy: -1.5708 0 0
+  axis: 0 0 1
+
+joint4:
+  origin:
+    xyz: 0.018 0 0
+    rpy: -1.5708 0 3.1416
+  axis: 0 0 1
+
+joint5:
+  origin:
+    xyz: 0.018 -0.314 0
+    rpy: -1.5708 0 3.1416
+  axis: 0 0 1
+
+joint6:
+  origin:
+    xyz: 0 0 0
+    rpy: 1.5708 -1.5708 0
+  axis: 0 0 1
+
+joint7:
+  origin:
+    xyz: 0 0 0
+    rpy: 1.5708 -1.5708 0
+  axis: 0 0 1
+
+flange:
+  origin:
+    xyz: 0 -0.095 0
+    rpy: 1.5708 -1.5708 0

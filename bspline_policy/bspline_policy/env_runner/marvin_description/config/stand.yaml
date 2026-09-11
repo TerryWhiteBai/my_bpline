@@ -1,0 +1,13 @@
+# Site-calibrated stand geometry relative to base_link.
+# Lengths and radii are metres; RPY values are radians.
+column:
+  radius: 0.060
+  length: 1.0
+  origin:
+    xyz: 0 0 -0.50
+    rpy: 0 0 0
+
+tracking_base:
+  origin:
+    xyz: 0 0 -1
+    rpy: 0 0 0
